@@ -8,7 +8,17 @@
 <meta property="og:title" content="Antonio Mieres — Desarrollador Full Stack con IA" />
 <meta property="og:description" content="React, Flask, APIs REST e IA aplicada. Proyecto en producción: Block Ethos, plataforma de aprendizaje de blockchain." />
 <meta property="og:type" content="website" />
-<meta name="theme-color" content="#f6f4ef" />
+<meta property="og:url" content="https://mieresantonio.github.io/portfolio/" />
+<meta property="og:image" content="https://mieresantonio.github.io/portfolio/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Antonio Mieres — Desarrollador Full Stack con IA" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Antonio Mieres — Desarrollador Full Stack con IA" />
+<meta name="twitter:description" content="React, Flask, APIs REST e IA aplicada. Proyecto en producción: Block Ethos, plataforma de aprendizaje de blockchain." />
+<meta name="twitter:image" content="https://mieresantonio.github.io/portfolio/og-image.png" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f4ef" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e2744" />
 <script>document.documentElement.classList.add('js');</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316365c'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='36' fill='%23f6f4ef' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
 <style>
@@ -18,7 +28,7 @@
     --surface:#fffefa;
     --ink:#15222f;
     --muted:#54636f;
-    --faint:#8593a1;
+    --faint:#5f6e7a;
     --line:rgba(21,34,47,.10);
     --accent:#16365c;
     --accent-deep:#0e2744;
@@ -28,9 +38,12 @@
     --shadow:0 0 0 1px rgba(21,34,47,.06), 0 1px 2px rgba(21,34,47,.06), 0 2px 4px rgba(21,34,47,.04);
     --shadow-hover:0 0 0 1px rgba(21,34,47,.08), 0 4px 8px rgba(21,34,47,.06), 0 8px 16px rgba(21,34,47,.06);
     --ease:cubic-bezier(.22,1,.36,1);
-    --font-display:"Newsreader",Georgia,"Times New Roman",serif;
+    --font-display:Georgia,"Times New Roman",serif;
     --font-body:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     --font-mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    /* Código real: fondo marino profundo, texto y sintaxis claros (contraste ≥ 6:1) */
+    --code-base:#dbe7f5; --code-kw:#8fb8ff; --code-str:#a5d6a7; --code-com:#93a7bd; --code-fn:#6fc3e8;
+    --code-bg:#0e2744; /* el bloque de código es oscuro en ambos temas */
   }
   *{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
@@ -41,7 +54,13 @@
   }
   ::selection{ background:rgba(43,92,184,.20); }
   a{ color:var(--sky); }
-  a:focus-visible, button:focus-visible{ outline:2px solid var(--sky); outline-offset:2px; border-radius:4px; }
+  a:focus-visible, button:focus-visible, .code:focus-visible{ outline:2px solid var(--sky); outline-offset:2px; border-radius:4px; }
+  /* Enlace «saltar al contenido»: invisible hasta recibir el foco del teclado */
+  .skip{ position:absolute; left:16px; top:-64px; z-index:100; background:var(--accent); color:#fff; padding:10px 16px; border-radius:var(--r-m); font-weight:600; text-decoration:none; transition:top 150ms var(--ease); }
+  .skip:focus-visible{ top:12px; }
+  /* El header fijo mide 64px: sin esto, el salto por ancla deja la etiqueta
+     de la sección tapada bajo el header (verificado: sectionTop 0 antes del arreglo). */
+  section[id]{ scroll-margin-top:88px; }
   .wrap{ max-width:68rem; margin:0 auto; padding-inline:clamp(20px,5vw,40px); }
   .mono{ font-family:var(--font-mono); }
 
@@ -55,7 +74,7 @@
   .brand{ font-family:var(--font-display); font-weight:600; font-size:1.15rem; color:var(--ink); text-decoration:none; letter-spacing:-.01em; }
   .brand span{ color:var(--sky); }
   .nav-links{ display:flex; gap:28px; }
-  .nav-links a{ color:var(--muted); text-decoration:none; font-size:.92rem; font-weight:500; transition:color 150ms var(--ease); }
+  .nav-links a{ color:var(--muted); text-decoration:none; font-size:.92rem; font-weight:500; padding:12px 4px; transition:color 150ms var(--ease); }
   .nav-links a:hover{ color:var(--ink); }
   @media (max-width:640px){ .nav-links{ display:none; } }
 
@@ -71,6 +90,7 @@
   .btn-primary:hover{ background:var(--accent-deep); }
   .btn-ghost{ background:var(--surface); color:var(--ink); box-shadow:var(--shadow); }
   .btn-ghost:hover{ box-shadow:var(--shadow-hover); }
+  .btn-sm{ min-height:40px; padding:8px 16px; }
 
   /* ===== Hero ===== */
   .hero{ padding-block:clamp(56px,9vw,96px) clamp(48px,7vw,72px); }
@@ -102,6 +122,7 @@
   .card{
     background:var(--surface); border-radius:var(--r-l); box-shadow:var(--shadow);
     padding:24px; transition:transform 250ms var(--ease), box-shadow 250ms var(--ease);
+    min-width:0; /* sin esto, el código largo ensancha la tarjeta y la página desborda en móvil */
   }
   .card:hover{ transform:translateY(-2px); box-shadow:var(--shadow-hover); }
   .card h3{ font-family:var(--font-display); font-weight:600; font-size:1.3rem; letter-spacing:-.01em; margin:0; }
@@ -110,6 +131,54 @@
   .links{ display:flex; gap:20px; margin-top:16px; font-size:.92rem; font-weight:600; }
   .links a{ text-decoration:none; }
   .links a:hover{ text-decoration:underline; text-underline-offset:3px; }
+
+  /* ===== Clases extraídas (sin estilos en línea repetidos) ===== */
+  strong{ color:var(--ink); }
+  .split{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:32px; align-items:start; }
+  .about-text{ color:var(--muted); display:grid; gap:16px; }
+  .about-text p{ margin:0; }
+  .fact-list{ list-style:none; margin:0; padding:0; display:grid; gap:12px; font-size:.95rem; }
+  .fact{ display:flex; gap:12px; }
+  .fact-mark{ color:var(--sky); font-family:var(--font-mono); }
+  .fact-text{ color:var(--muted); }
+  .grid-skills{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+  .skill-list{ list-style:none; margin:12px 0 0; padding:0; display:grid; gap:8px; color:var(--muted); font-size:.95rem; }
+  .grid-cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+  .grid-projects{ margin-top:16px; }
+  .card-featured{ padding:32px; }
+  .card-featured h3{ font-size:1.7rem; }
+  .card-featured p{ max-width:68ch; }
+  .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:24px 32px; margin-top:24px; }
+  .stat-num{ font-family:var(--font-display); font-size:1.6rem; font-weight:600; font-variant-numeric:tabular-nums; }
+  .stat-total{ color:var(--faint); font-size:1.1rem; }
+  .stat-label{ color:var(--faint); font-size:.82rem; }
+  .demo-local{ color:var(--faint); font-weight:500; }
+  .more{ color:var(--muted); margin-top:24px; }
+  .more a{ font-weight:600; text-decoration:none; white-space:nowrap; }
+  /* ===== Código real ===== */
+  .code-intro{ color:var(--muted); max-width:62ch; margin:0 0 24px; text-wrap:pretty; }
+  .code-stack{ display:grid; gap:16px; }
+  .code-head{ display:flex; flex-wrap:wrap; gap:4px 16px; justify-content:space-between; align-items:baseline; margin-top:16px; font-size:.92rem; }
+  .code-file{ font-family:var(--font-mono); font-size:.78rem; color:var(--faint); }
+  .code{ background:var(--code-bg); border-radius:var(--r-m); padding:20px 24px; overflow-x:auto; margin:16px 0 0; }
+  .code code{ font-family:var(--font-mono); font-size:.8rem; line-height:1.65; color:var(--code-base); font-variant-numeric:tabular-nums; }
+  .code .kw{ color:var(--code-kw); }
+  .code .st{ color:var(--code-str); }
+  .code .cm{ color:var(--code-com); }
+  .code .fn{ color:var(--code-fn); }
+  @media (max-width:640px){ .code{ padding:16px; } .code code{ font-size:.75rem; } }
+  .edu-head{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+  .card p.edu-org{ color:var(--sky); font-weight:600; margin-top:4px; }
+  .edu-year{ color:var(--faint); font-size:.78rem; }
+  #contacto .wrap{ text-align:center; }
+  #contacto .sec-head{ margin-bottom:16px; }
+  #contacto h2{ font-size:clamp(2rem,4.5vw,2.7rem); }
+  #contacto .cta-row{ justify-content:center; }
+  .contact-lead{ color:var(--muted); max-width:52ch; margin:0 auto; text-wrap:pretty; }
+  .contact-email{ margin-top:20px; font-size:.82rem; letter-spacing:.03em; color:var(--faint); }
+  footer{ box-shadow:0 -1px 0 var(--line); padding-block:28px; }
+  .foot{ display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between; color:var(--faint); font-size:.82rem; }
+  .foot-note{ font-size:.75rem; letter-spacing:.04em; }
 
   /* Revelado al hacer scroll: mejora progresiva — sin JS el contenido se ve siempre */
   .js .rev{ opacity:0; transform:translateY(10px); }
@@ -120,9 +189,47 @@
     .js .rev.in{ transition:none; }
     .card, .btn{ transition:none; }
   }
+  /* Modo oscuro: mismos tokens, valores de la paleta oscura (diseno-vitrina §10).
+     Contraste verificado en cada par texto/fondo (≥ 4.5:1): tinta 13.22/10.72,
+     atenuado 8.64/7.01, tenue 6.11/4.95, cielo 6.86/5.57, blanco sobre acento 6.31. */
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#0e2744;
+      --surface:#16365c;
+      --ink:#e8f1fb;
+      --muted:#b3c6dc;
+      --faint:#93a7bd;
+      --line:rgba(232,241,251,.14);
+      --accent:#2b5cb8;
+      --accent-deep:#1d4a8a;
+      --sky:#7fb0ff;
+      --ok:#4cc38a;
+      --shadow:0 0 0 1px rgba(232,241,251,.08), 0 1px 2px rgba(0,0,0,.30), 0 2px 4px rgba(0,0,0,.25);
+      --shadow-hover:0 0 0 1px rgba(232,241,251,.12), 0 4px 8px rgba(0,0,0,.30), 0 8px 16px rgba(0,0,0,.30);
+    }
+    header{ background:rgba(14,39,68,.88); }
+    ::selection{ background:rgba(127,176,255,.30); }
+  }
+  /* Impresión: sin navegación ni sombras; todo el contenido visible */
+  @media print{
+    /* Imprimir siempre en claro, aunque el sistema esté en oscuro */
+    :root{
+      --paper:#f6f4ef; --surface:#fffefa; --ink:#15222f; --muted:#54636f;
+      --faint:#5f6e7a; --line:rgba(21,34,47,.10); --accent:#16365c;
+      --accent-deep:#0e2744; --sky:#2b5cb8; --ok:#1c7c4d;
+    }
+    header{ position:static; box-shadow:none; background:#fff; }
+    .nav-links, header .btn{ display:none; }
+    body{ background:#fff; }
+    .hero, section{ padding-block:24px; }
+    .card, .btn, .pill{ box-shadow:none; }
+    .card{ break-inside:avoid; }
+    .js .rev{ opacity:1; transform:none; }
+  }
 </style>
 </head>
 <body>
+<a class="skip" href="#inicio">Saltar al contenido</a>
 
 <header>
   <div class="wrap nav">
@@ -131,9 +238,10 @@
       <a href="#sobre-mi">Sobre mí</a>
       <a href="#skills">Skills</a>
       <a href="#proyectos">Proyectos</a>
+      <a href="#codigo">Código</a>
       <a href="#contacto">Contacto</a>
     </nav>
-    <a class="btn btn-primary" href="#contacto" style="min-height:40px; padding:8px 16px;">Contrátame</a>
+    <a class="btn btn-primary btn-sm" href="#contacto">Contrátame</a>
   </div>
 </header>
 
@@ -165,17 +273,18 @@
         <p class="sec-label">01 — Sobre mí</p>
         <h2>Desarrollo web clásico, flujo de trabajo con IA</h2>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:32px; align-items:start;">
-        <div class="rev" style="--i:1; color:var(--muted); display:grid; gap:16px;">
-          <p style="margin:0;">Soy un desarrollador Full Stack formado en <strong style="color:var(--ink);">4Geeks Academy</strong>, con un enfoque moderno: fundamentos sólidos de desarrollo web combinados con herramientas de inteligencia artificial en el trabajo diario.</p>
-          <p style="margin:0;">En el frontend trabajo con <strong style="color:var(--ink);">React</strong> y consumo de <strong style="color:var(--ink);">APIs REST</strong>; en el servidor, con <strong style="color:var(--ink);">Python y Flask</strong>: autenticación con JWT, APIs propias y bases de datos SQL.</p>
-          <p style="margin:0;">Uso la IA como herramienta de trabajo — no como atajo: para diseñar mejor, depurar más rápido y documentar con claridad.</p>
+      <div class="split">
+        <div class="rev about-text" style="--i:1;">
+          <p>Soy un desarrollador Full Stack formado en <strong>4Geeks Academy</strong>, con un enfoque moderno: fundamentos sólidos de desarrollo web combinados con herramientas de inteligencia artificial en el trabajo diario.</p>
+          <p>En el frontend trabajo con <strong>React</strong> y consumo de <strong>APIs REST</strong>; en el servidor, con <strong>Python y Flask</strong>: autenticación con JWT, APIs propias y bases de datos SQL.</p>
+          <p>Uso la IA como herramienta de trabajo — no como atajo: para diseñar mejor, depurar más rápido y documentar con claridad.</p>
         </div>
-        <ul class="rev" style="--i:2; list-style:none; margin:0; padding:0; display:grid; gap:12px; font-size:.95rem;">
-          <li style="display:flex; gap:12px;"><span style="color:var(--sky); font-family:var(--font-mono);">▸</span><span style="color:var(--muted);">Graduado: Full Stack Developer con IA — 4Geeks Academy (2026)</span></li>
-          <li style="display:flex; gap:12px;"><span style="color:var(--sky); font-family:var(--font-mono);">▸</span><span style="color:var(--muted);">Enfoque: aplicaciones web modernas, APIs e integración de IA</span></li>
-          <li style="display:flex; gap:12px;"><span style="color:var(--sky); font-family:var(--font-mono);">▸</span><span style="color:var(--muted);">Proyecto en producción: Block Ethos, desplegado y en línea</span></li>
-          <li style="display:flex; gap:12px;"><span style="color:var(--sky); font-family:var(--font-mono);">▸</span><span style="color:var(--muted);">Objetivo: rol remoto como desarrollador Full Stack</span></li>
+        <ul class="rev fact-list" style="--i:2;">
+          <li class="fact"><span class="fact-mark">▸</span><span class="fact-text">Graduado: Full Stack Developer con IA — 4Geeks Academy (2026)</span></li>
+          <li class="fact"><span class="fact-mark">▸</span><span class="fact-text">Enfoque: aplicaciones web modernas, APIs e integración de IA</span></li>
+          <li class="fact"><span class="fact-mark">▸</span><span class="fact-text">Proyecto en producción: Block Ethos, desplegado y en línea</span></li>
+          <li class="fact"><span class="fact-mark">▸</span><span class="fact-text">Objetivo: rol remoto como desarrollador Full Stack</span></li>
+          <li class="fact"><span class="fact-mark">▸</span><span class="fact-text">Inglés: B1 comprensión lectora (British Council, nov 2026)</span></li>
         </ul>
       </div>
     </div>
@@ -188,22 +297,22 @@
         <p class="sec-label">02 — Skills</p>
         <h2>Lo que uso para construir</h2>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px;">
+      <div class="grid-skills">
         <div class="card rev" style="--i:0;">
           <h3>Frontend</h3>
-          <ul style="list-style:none; margin:12px 0 0; padding:0; display:grid; gap:8px; color:var(--muted); font-size:.95rem;">
+          <ul class="skill-list">
             <li>React.js</li><li>JavaScript</li><li>HTML5 / CSS3</li><li>Bootstrap</li>
           </ul>
         </div>
         <div class="card rev" style="--i:1;">
           <h3>Backend y datos</h3>
-          <ul style="list-style:none; margin:12px 0 0; padding:0; display:grid; gap:8px; color:var(--muted); font-size:.95rem;">
+          <ul class="skill-list">
             <li>Python</li><li>Flask</li><li>SQL y SQLAlchemy</li><li>APIs RESTful</li><li>Autenticación con JWT</li>
           </ul>
         </div>
         <div class="card rev" style="--i:2;">
           <h3>Herramientas y testing</h3>
-          <ul style="list-style:none; margin:12px 0 0; padding:0; display:grid; gap:8px; color:var(--muted); font-size:.95rem;">
+          <ul class="skill-list">
             <li>Git y GitHub</li><li>Jest (testing)</li><li>IA en el flujo de desarrollo</li>
           </ul>
         </div>
@@ -219,15 +328,15 @@
         <h2>Trabajo real, no ejercicios</h2>
       </div>
 
-      <article class="card rev" style="--i:0; padding:32px;">
+      <article class="card card-featured rev" style="--i:0;">
         <p class="stack">Proyecto destacado · React · Flask · JWT · En producción</p>
-        <h3 style="font-size:1.7rem;">Block Ethos — Web3 Space</h3>
-        <p style="max-width:68ch;">Plataforma de aprendizaje con rutas guiadas, módulos y lecciones en Markdown, quizzes con progreso guardado en el servidor, un tutor que responde citando el contenido del curso y certificados verificables al completar cada ruta. Mi aporte: <strong style="color:var(--ink);">44 de los 89 commits</strong> del repositorio original, incluido el despliegue en producción.</p>
-        <div style="display:flex; flex-wrap:wrap; gap:32px; margin-top:24px;">
-          <div><div style="font-family:var(--font-display); font-size:1.6rem; font-weight:600; font-variant-numeric:tabular-nums;">2</div><div style="color:var(--faint); font-size:.82rem;">rutas completas</div></div>
-          <div><div style="font-family:var(--font-display); font-size:1.6rem; font-weight:600; font-variant-numeric:tabular-nums;">9</div><div style="color:var(--faint); font-size:.82rem;">lecciones</div></div>
-          <div><div style="font-family:var(--font-display); font-size:1.6rem; font-weight:600; font-variant-numeric:tabular-nums;">9</div><div style="color:var(--faint); font-size:.82rem;">quizzes</div></div>
-          <div><div style="font-family:var(--font-display); font-size:1.6rem; font-weight:600; font-variant-numeric:tabular-nums;">44<span style="color:var(--faint); font-size:1.1rem;">/89</span></div><div style="color:var(--faint); font-size:.82rem;">commits míos</div></div>
+        <h3>Block Ethos — Web3 Space</h3>
+        <p>Plataforma de aprendizaje con rutas guiadas, módulos y lecciones en Markdown, quizzes con progreso guardado en el servidor, un tutor que responde citando el contenido del curso y certificados verificables al completar cada ruta. Mi aporte: <strong>48 de los 93 commits</strong> del repositorio original, incluido el despliegue en producción.</p>
+        <div class="stats">
+          <div><div class="stat-num">2</div><div class="stat-label">rutas completas</div></div>
+          <div><div class="stat-num">9</div><div class="stat-label">lecciones</div></div>
+          <div><div class="stat-num">9</div><div class="stat-label">quizzes</div></div>
+          <div><div class="stat-num">48<span class="stat-total">/93</span></div><div class="stat-label">commits míos</div></div>
         </div>
         <div class="links">
           <a href="https://BC123.pythonanywhere.com" target="_blank" rel="noopener">Demo en vivo ↗</a>
@@ -235,11 +344,11 @@
         </div>
       </article>
 
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-top:16px;">
+      <div class="grid-cards grid-projects">
         <article class="card rev" style="--i:1;">
           <p class="stack">Python · Flask · FAISS · Embeddings</p>
           <h3>Asistente RAG de documentos</h3>
-          <p>Responde preguntas sobre una colección de documentos con búsqueda semántica multilingüe y citas de la fuente: 27 documentos, 527 fragmentos indexados.</p>
+          <p>Responde preguntas sobre una colección de documentos con búsqueda semántica multilingüe y citas de la fuente: 28 documentos, 568 fragmentos indexados.</p>
           <div class="links"><a href="https://github.com/mieresantonio/rag-demo-asistente-documentos" target="_blank" rel="noopener">Código ↗</a></div>
         </article>
         <article class="card rev" style="--i:2;">
@@ -252,7 +361,7 @@
           <p class="stack">React · Flask · SQLite</p>
           <h3>Barbería — reservas para negocio local</h3>
           <p>Demo de agenda en vivo para una barbería: reserva en un minuto, control de solapamientos entre barberos y confirmación por WhatsApp simulado.</p>
-          <div class="links"><span style="color:var(--faint); font-weight:500;">Demo local</span></div>
+          <div class="links"><span class="demo-local">Demo local</span></div>
         </article>
         <article class="card rev" style="--i:4;">
           <p class="stack">Método · Agentes · GitHub</p>
@@ -262,7 +371,72 @@
         </article>
       </div>
 
-      <p class="rev" style="--i:5; color:var(--muted); margin-top:24px;">También: un laboratorio Web3 con 10 mini-aplicaciones educativas, una biblioteca de prompts de negocio y un diseñador de «segundo yo» con IA. <a href="https://github.com/mieresantonio" target="_blank" rel="noopener" style="font-weight:600; text-decoration:none; white-space:nowrap;">Todo está en mi GitHub ↗</a></p>
+      <p class="rev more" style="--i:5;">También: un laboratorio Web3 con 10 mini-aplicaciones educativas, una biblioteca de prompts de negocio y un diseñador de «segundo yo» con IA. <a href="https://github.com/mieresantonio" target="_blank" rel="noopener">Todo está en mi GitHub ↗</a></p>
+    </div>
+  </section>
+
+  <!-- CÓDIGO REAL -->
+  <section id="codigo">
+    <div class="wrap">
+      <div class="sec-head rev">
+        <p class="sec-label">04 — Código</p>
+        <h2>Código real, con su porqué</h2>
+      </div>
+      <p class="rev code-intro" style="--i:0;">Dos fragmentos tal cual están en los repositorios — no muestras de juguete — con la decisión que hay detrás de cada uno.</p>
+      <div class="code-stack">
+        <article class="card rev" style="--i:1;">
+          <p class="stack">Block Ethos · Flask · Validación y permisos</p>
+          <h3>El progreso de un usuario solo lo toca ese usuario</h3>
+          <p>Cada validación de este endpoint existe porque un bug real la pidió: sin el tope de 0–100 se aceptaban notas de 99999 y la XP de la gamificación se inflaba sin límite; y el 403 es la otra mitad — nadie modifica el progreso de otro.</p>
+<pre class="code" tabindex="0" aria-label="Fragmento de código de src/api/routes.py, líneas 666 a 680"><code><span class="fn">@api.route</span>(<span class="st">'/progress/&lt;int:user_id&gt;/&lt;int:lesson_id&gt;'</span>, methods=[<span class="st">'PUT'</span>])
+<span class="fn">@jwt_required</span>()
+<span class="kw">def</span> <span class="fn">update_progress</span>(user_id, lesson_id):
+    current_user_id = <span class="fn">_current_user_id</span>()
+    <span class="kw">if</span> current_user_id != user_id:
+        <span class="kw">return</span> <span class="fn">jsonify</span>({<span class="st">"error"</span>: <span class="st">"No tienes permiso para modificar este recurso"</span>}), 403
+
+    body = request.<span class="fn">get_json</span>(silent=<span class="kw">True</span>) <span class="kw">or</span> {}
+    <span class="kw">if</span> <span class="kw">not</span> <span class="fn">isinstance</span>(body, dict):
+        <span class="kw">return</span> <span class="fn">jsonify</span>({<span class="st">"error"</span>: <span class="st">"Cuerpo de la petición inválido"</span>}), 400
+    <span class="cm"># Sin esta validación se aceptaban notas como 99999, y la XP de la</span>
+    <span class="cm"># gamificación (que suma quiz_score tal cual) se inflaba sin límite.</span>
+    <span class="kw">if</span> body.<span class="fn">get</span>(<span class="st">"quiz_score"</span>) <span class="kw">is</span> <span class="kw">not</span> <span class="kw">None</span> \
+            <span class="kw">and</span> <span class="kw">not</span> <span class="fn">_es_score_valido</span>(body[<span class="st">"quiz_score"</span>]):
+        <span class="kw">return</span> <span class="fn">jsonify</span>({<span class="st">"error"</span>: <span class="st">"quiz_score debe ser un número entre 0 y 100"</span>}), 400</code></pre>
+          <div class="code-head">
+            <a href="https://github.com/mieresantonio/block-ethos/blob/main/src/api/routes.py#L666-L680" target="_blank" rel="noopener">Archivo completo en GitHub ↗</a>
+            <span class="code-file">src/api/routes.py · líneas 666–680</span>
+          </div>
+        </article>
+
+        <article class="card rev" style="--i:2;">
+          <p class="stack">Asistente RAG · Python · Fragmentación con solape</p>
+          <h3>Un fragmento nunca parte una idea por la mitad</h3>
+          <p>El fragmentador no corta cada N caracteres a ciegas: acumula párrafos enteros y arrastra el último al siguiente fragmento, para que el contexto cruce la frontera entre dos trozos del índice.</p>
+<pre class="code" tabindex="0" aria-label="Fragmento de código de rag_core.py, líneas 107 a 133"><code><span class="kw">def</span> <span class="fn">chunk_text</span>(text, size=CHUNK_CHARS, overlap=OVERLAP_CHARS):
+    <span class="st">"""Trocea por párrafos acumulando hasta `size` caracteres, con solape."""</span>
+    paragraphs = [p.<span class="fn">strip</span>() <span class="kw">for</span> p <span class="kw">in</span> re.<span class="fn">split</span>(<span class="st">r"\n\s*\n"</span>, text) <span class="kw">if</span> p.<span class="fn">strip</span>()]
+    chunks = []
+    current = <span class="st">""</span>
+    <span class="kw">for</span> para <span class="kw">in</span> paragraphs:
+        <span class="cm">…</span>
+        candidate = (current + <span class="st">"\n\n"</span> + para) <span class="kw">if</span> current <span class="kw">else</span> para
+        <span class="kw">if</span> <span class="fn">len</span>(candidate) &lt;= size:
+            current = candidate
+        <span class="kw">else</span>:
+            chunks.<span class="fn">append</span>(current)
+            <span class="cm"># solape: arrastra el último párrafo al siguiente fragmento</span>
+            tail = para <span class="kw">if</span> <span class="fn">len</span>(para) &lt;= overlap <span class="kw">else</span> current[-overlap:]
+            current = (tail + <span class="st">"\n\n"</span> + para) <span class="kw">if</span> tail != para <span class="kw">else</span> para
+    <span class="kw">if</span> current:
+        chunks.<span class="fn">append</span>(current)
+    <span class="kw">return</span> [c <span class="kw">for</span> c <span class="kw">in</span> chunks <span class="kw">if</span> <span class="fn">len</span>(c) &gt;= 40]</code></pre>
+          <div class="code-head">
+            <a href="https://github.com/mieresantonio/rag-demo-asistente-documentos/blob/main/rag_core.py#L107-L133" target="_blank" rel="noopener">Archivo completo en GitHub ↗</a>
+            <span class="code-file">rag_core.py · líneas 107–133 · «…» marca un corte</span>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -270,24 +444,24 @@
   <section id="educacion">
     <div class="wrap">
       <div class="sec-head rev">
-        <p class="sec-label">04 — Educación</p>
+        <p class="sec-label">05 — Educación</p>
         <h2>Formación</h2>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px;">
+      <div class="grid-cards">
         <div class="card rev" style="--i:0;">
-          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px;">
+          <div class="edu-head">
             <h3>Full Stack Developer con IA</h3>
-            <span class="mono" style="color:var(--faint); font-size:.78rem;">2026</span>
+            <span class="mono edu-year">2026</span>
           </div>
-          <p style="color:var(--sky); font-weight:600; margin-top:4px;">4Geeks Academy</p>
+          <p class="edu-org">4Geeks Academy</p>
           <p>Programa intensivo de desarrollo full stack: fundamentos web, React, Python y Flask, consumo y creación de APIs, y aplicación de inteligencia artificial en el flujo de desarrollo. Proyecto final desplegado en producción.</p>
         </div>
         <div class="card rev" style="--i:1;">
-          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px;">
+          <div class="edu-head">
             <h3>Tu segundo yo 24/7</h3>
-            <span class="mono" style="color:var(--faint); font-size:.78rem;">2026</span>
+            <span class="mono edu-year">2026</span>
           </div>
-          <p style="color:var(--sky); font-weight:600; margin-top:4px;">CenteIA Education</p>
+          <p class="edu-org">CenteIA Education</p>
           <p>Formación en agentes de IA y asistentes personales: diseño de un «segundo yo» digital, con certificado de asistencia verificado.</p>
         </div>
       </div>
@@ -296,26 +470,26 @@
 
   <!-- CONTACTO -->
   <section id="contacto">
-    <div class="wrap" style="text-align:center;">
-      <div class="sec-head rev" style="margin-bottom:16px;">
-        <p class="sec-label">05 — Contacto</p>
-        <h2 style="font-size:clamp(2rem,4.5vw,2.7rem);">¿Construimos algo juntos?</h2>
+    <div class="wrap">
+      <div class="sec-head rev">
+        <p class="sec-label">06 — Contacto</p>
+        <h2>¿Construimos algo juntos?</h2>
       </div>
-      <p class="rev" style="--i:1; color:var(--muted); max-width:52ch; margin:0 auto; text-wrap:pretty;">Estoy buscando mi primera oportunidad como desarrollador, idealmente remota. Si mi perfil encaja con lo que buscas, hablemos.</p>
-      <div class="cta-row rev" style="--i:2; justify-content:center;">
+      <p class="rev contact-lead" style="--i:1;">Estoy buscando mi primera oportunidad como desarrollador, idealmente remota. Si mi perfil encaja con lo que buscas, hablemos.</p>
+      <div class="cta-row rev" style="--i:2;">
         <a class="btn btn-primary" href="mailto:mieresantonio@gmail.com">Escríbeme</a>
         <a class="btn btn-ghost" href="https://www.linkedin.com/in/antonio-mieres-09b1892a5" target="_blank" rel="noopener">LinkedIn</a>
         <a class="btn btn-ghost" href="https://github.com/mieresantonio" target="_blank" rel="noopener">GitHub</a>
       </div>
-      <p class="rev mono" style="--i:3; margin-top:20px; font-size:.82rem; letter-spacing:.03em; color:var(--faint);">mieresantonio@gmail.com</p>
+      <p class="rev mono contact-email" style="--i:3;">mieresantonio@gmail.com</p>
     </div>
   </section>
 </main>
 
-<footer style="box-shadow:0 -1px 0 var(--line); padding-block:28px;">
-  <div class="wrap" style="display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between; color:var(--faint); font-size:.82rem;">
+<footer>
+  <div class="wrap foot">
     <span>Antonio Mieres — 2026</span>
-    <span class="mono" style="font-size:.75rem; letter-spacing:.04em;">HTML + CSS EN UN SOLO ARCHIVO · SIN FRAMEWORKS</span>
+    <span class="mono foot-note">HTML + CSS EN UN SOLO ARCHIVO · SIN FRAMEWORKS</span>
   </div>
 </footer>
 
