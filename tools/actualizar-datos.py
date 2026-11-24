@@ -86,24 +86,6 @@ FUENTES = {
 
 DATOS = [
     {
-        "clave": "block-ethos-commits-mios",
-        "fuente": "block-ethos",
-        "campo": "autor",
-        "destinos": [
-            r"(?P<valor>\d+) de los \d+ commits",
-            r'<div class="stat-num">(?P<valor>\d+)<span class="stat-total">/\d+</span>',
-        ],
-    },
-    {
-        "clave": "block-ethos-commits-total",
-        "fuente": "block-ethos",
-        "campo": "total",
-        "destinos": [
-            r"\d+ de los (?P<valor>\d+) commits",
-            r'<div class="stat-num">\d+<span class="stat-total">/(?P<valor>\d+)</span>',
-        ],
-    },
-    {
         "clave": "rag-documentos",
         "fuente": "rag",
         "campo": "documentos",

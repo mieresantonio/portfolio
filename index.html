@@ -193,6 +193,11 @@
     font-variant-numeric:tabular-nums; letter-spacing:-.01em;
   }
   .proof .live-dot{ width:8px; height:8px; border-radius:50%; background:var(--ok); flex:none; align-self:center; }
+  /* Cifras con prueba («Verifica lo que digo», 4ª tanda, 23 nov 2026):
+     el color cielo lo da la regla base a{}; aquí solo se fija el
+     subrayado con respiro y el engrosado al pasar el ratón. */
+  .prueba{ text-underline-offset:3px; }
+  .prueba:hover{ text-decoration-thickness:2px; }
 
   /* ===== Secciones ===== */
   section{ padding-block:clamp(48px,7vw,72px); }
@@ -417,7 +422,7 @@
     .card, .btn, .pill{ box-shadow:none; }
     .card{ break-inside:avoid; }
     .js .rev{ opacity:1; transform:none; }
-    .links a[href^="http"]::after, .code-head a[href^="http"]::after, .more a[href^="http"]::after, .cta-row a[href$=".pdf"]::after{
+    .prueba[href^="http"]::after, .links a[href^="http"]::after, .code-head a[href^="http"]::after, .more a[href^="http"]::after, .cta-row a[href$=".pdf"]::after{
       content:" (" attr(href) ")"; font-size:.72rem; font-weight:400; word-break:break-all;
     }
   }
@@ -479,9 +484,9 @@
         <a class="btn btn-ghost" href="https://mieresantonio.github.io/portfolio/cv-antonio-mieres.pdf" target="_blank" rel="noopener" aria-label="Currículum de Antonio Mieres en PDF (se abre en una pestaña nueva)">CV (PDF)</a>
       </div>
       <ul class="proof" aria-label="Datos verificables del trabajo">
-        <li><strong data-dato="be-tests">166</strong> pruebas de backend + <strong data-dato="fe-tests">18</strong> de frontend</li>
-        <li><strong data-dato="gh-repos">49</strong> repositorios públicos</li>
-        <li><span class="live-dot" aria-hidden="true"></span> Demo en producción</li>
+        <li><strong data-dato="be-tests"><a class="prueba" href="https://github.com/mieresantonio/block-ethos/tree/main/tests" target="_blank" rel="noopener" aria-label="Pruebas de backend de Block Ethos en GitHub (se abre en una pestaña nueva)">166</a></strong> pruebas de backend + <strong data-dato="fe-tests"><a class="prueba" href="https://github.com/mieresantonio/block-ethos/tree/main/src/front/__tests__" target="_blank" rel="noopener" aria-label="Pruebas de frontend de Block Ethos en GitHub (se abre en una pestaña nueva)">18</a></strong> de frontend</li>
+        <li><strong data-dato="gh-repos"><a class="prueba" href="https://github.com/mieresantonio?tab=repositories" target="_blank" rel="noopener" aria-label="Repositorios públicos de Antonio Mieres en GitHub (se abre en una pestaña nueva)">49</a></strong> repositorios públicos</li>
+        <li><span class="live-dot" aria-hidden="true"></span> <a class="prueba" href="https://BC123.pythonanywhere.com" target="_blank" rel="noopener" aria-label="Demo en vivo de Block Ethos (se abre en una pestaña nueva)">Demo en producción</a></li>
       </ul>
       <p class="meta">REACT · FLASK · APIS REST · IA APLICADA</p>
     </div>
@@ -609,13 +614,13 @@
       <article class="card card-featured rev" style="--i:0;">
         <p class="stack">Proyecto destacado · React · Flask · JWT · En producción</p>
         <h3>Block Ethos — Web3 Space</h3>
-        <p class="live-seal"><span class="live-seal-dot" aria-hidden="true"></span> Demo en línea · verificada el <time datetime="2026-11-23" data-dato="be-en-vivo-fecha">23 nov 2026</time></p>
+        <p class="live-seal"><span class="live-seal-dot" aria-hidden="true"></span> <a class="prueba" href="https://BC123.pythonanywhere.com" target="_blank" rel="noopener" aria-label="Demo en vivo de Block Ethos (se abre en una pestaña nueva)">Demo en línea</a> · verificada el <time datetime="2026-11-23" data-dato="be-en-vivo-fecha">23 nov 2026</time></p>
         <p>Plataforma de aprendizaje con rutas guiadas, módulos y lecciones en Markdown, quizzes con progreso guardado en el servidor, un tutor que responde citando el contenido del curso y certificados verificables al completar cada ruta. Lo construí y lo desplegué en producción.</p>
         <div class="stats">
-          <div><div class="stat-num">2</div><div class="stat-label">rutas completas</div></div>
-          <div><div class="stat-num">9</div><div class="stat-label">lecciones</div></div>
-          <div><div class="stat-num">9</div><div class="stat-label">quizzes · <span data-dato="be-preguntas">36</span> preguntas</div></div>
-          <div><div class="stat-num"><span data-dato="be-tests">166</span><span class="stat-total"> + 18</span></div><div class="stat-label">pruebas de backend + frontend</div></div>
+          <div><div class="stat-num"><a class="prueba" href="https://BC123.pythonanywhere.com/courses" target="_blank" rel="noopener" aria-label="Las dos rutas en la demo en vivo (se abre en una pestaña nueva)">2</a></div><div class="stat-label">rutas completas</div></div>
+          <div><div class="stat-num"><a class="prueba" href="https://BC123.pythonanywhere.com/api/lessons" target="_blank" rel="noopener" aria-label="Las nueve lecciones en la API en vivo (se abre en una pestaña nueva)">9</a></div><div class="stat-label">lecciones</div></div>
+          <div><div class="stat-num"><a class="prueba" href="https://github.com/mieresantonio/block-ethos/blob/main/src/api/commands.py#L84-L709" target="_blank" rel="noopener" aria-label="Contenido sembrado: nueve quizzes de cuatro preguntas en GitHub (se abre en una pestaña nueva)">9</a></div><div class="stat-label">quizzes · <span data-dato="be-preguntas"><a class="prueba" href="https://github.com/mieresantonio/block-ethos/blob/main/src/api/commands.py#L84-L709" target="_blank" rel="noopener" aria-label="Contenido sembrado: treinta y seis preguntas en GitHub (se abre en una pestaña nueva)">36</a></span> preguntas</div></div>
+          <div><div class="stat-num"><span data-dato="be-tests"><a class="prueba" href="https://github.com/mieresantonio/block-ethos/tree/main/tests" target="_blank" rel="noopener" aria-label="Pruebas de backend de Block Ethos en GitHub (se abre en una pestaña nueva)">166</a></span><span class="stat-total"> + <a class="prueba" href="https://github.com/mieresantonio/block-ethos/tree/main/src/front/__tests__" target="_blank" rel="noopener" aria-label="Pruebas de frontend de Block Ethos en GitHub (se abre en una pestaña nueva)">18</a></span></div><div class="stat-label">pruebas de backend + frontend</div></div>
         </div>
         <p class="stat-note">144 de las 166 de backend, en verde; las 22 restantes y las 18 de frontend, pendientes de corrida.</p>
         <div class="arch" role="img" aria-label="Arquitectura de Block Ethos: interfaz en React, API en Flask con autenticación JWT, base de datos SQLite, desplegado en PythonAnywhere">
@@ -637,7 +642,7 @@
         <article class="card rev" style="--i:1;">
           <p class="stack">Python · Flask · FAISS · Embeddings</p>
           <h3>Asistente RAG de documentos</h3>
-          <p>Responde preguntas sobre una colección de documentos con búsqueda semántica multilingüe y citas de la fuente: 28 documentos, 572 fragmentos indexados.</p>
+          <p>Responde preguntas sobre una colección de documentos con búsqueda semántica multilingüe y citas de la fuente: <a class="prueba" href="https://github.com/mieresantonio/rag-demo-asistente-documentos/blob/main/data/meta.json" target="_blank" rel="noopener" aria-label="Metadatos del índice RAG: 28 documentos y 572 fragmentos en GitHub (se abre en una pestaña nueva)">28 documentos, 572 fragmentos indexados</a>.</p>
           <div class="links"><a href="https://github.com/mieresantonio/rag-demo-asistente-documentos" target="_blank" rel="noopener" aria-label="Código del asistente RAG en GitHub (se abre en una pestaña nueva)">Código ↗</a></div>
         </article>
         <article class="card rev" style="--i:2;">
